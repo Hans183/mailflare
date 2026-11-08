@@ -1,28 +1,13 @@
 import type { AgentModelOption, AgentModelRates, AgentProviderPreset } from "./provider-types";
 import { getAgentProviderConfig, resolveAgentBaseUrl } from "./provider";
+import { perMillion, selectCloudflareToolModels } from "./provider-models-utils";
 
+// Shown only when the live catalog cannot be read. Prices as published on 2026-11-08.
 export const CLOUDFLARE_TOOL_MODELS: AgentModelOption[] = [
-	{ id: "@cf/moonshotai/kimi-k2.5", name: "Kimi K2.5" },
-	{ id: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", name: "Llama 3.3 70B" },
-	{ id: "@cf/qwen/qwen3-30b-a3b-fp8", name: "Qwen3 30B" },
+	{ id: "@cf/zai-org/glm-4.7-flash", name: "GLM 4.7 Flash", rates: { input: 0.0605, output: 0.4 } },
+	{ id: "@cf/openai/gpt-oss-20b", name: "GPT-OSS 20B", rates: { input: 0.2, output: 0.3 } },
+	{ id: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", name: "Llama 3.3 70B", rates: { input: 0.293, output: 2.253 } },
 ];
-
-function perMillion(value: unknown, perToken: boolean): number | null {
-	const price = typeof value === "string" ? Number(value) : value;
-	if (typeof price !== "number" || !Number.isFinite(price) || price < 0) return null;
-	return Number((perToken ? price * 1_000_000 : price).toPrecision(10));
-}
-
-// Workers AI lists prices as [{ unit: "per M input tokens", price, currency: "USD" }, ...] under properties.
-function cloudflareRates(properties: unknown): AgentModelRates | undefined {
-	if (!Array.isArray(properties)) return undefined;
-	const entry = properties.find((item) => item && typeof item === "object" && item.property_id === "price");
-	const prices: { unit?: unknown; price?: unknown; currency?: unknown }[] = Array.isArray(entry?.value) ? entry.value : [];
-	const find = (kind: "input" | "output") => prices.find((item) => item?.currency === "USD" && /per m/i.test(String(item.unit)) && String(item.unit).toLowerCase().includes(kind));
-	const input = perMillion(find("input")?.price, false);
-	const output = perMillion(find("output")?.price, false);
-	return input === null || output === null ? undefined : { input, output };
-}
 
 // OpenRouter publishes pricing.prompt / pricing.completion as USD per token (strings). Other providers omit pricing.
 function openRouterRates(pricing: unknown): AgentModelRates | undefined {
@@ -33,14 +18,15 @@ function openRouterRates(pricing: unknown): AgentModelRates | undefined {
 }
 
 export async function listCloudflareAgentModels(env: CloudflareEnv): Promise<{ models: AgentModelOption[]; source: "catalog" | "suggested" }> {
-	if (!env.CF_ACCOUNT_ID || !env.CF_TOKEN) return { models: CLOUDFLARE_TOOL_MODELS, source: "suggested" };
+	if (!env.AI) return { models: CLOUDFLARE_TOOL_MODELS, source: "suggested" };
 	try {
-		const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(env.CF_ACCOUNT_ID)}/ai/models/search?task=Text%20Generation`, { headers: { Authorization: `Bearer ${env.CF_TOKEN}` }, signal: AbortSignal.timeout(10_000), redirect: "manual" });
-		if (!response.ok) throw new Error("Catalog unavailable");
-		const json = await response.json() as { result?: { name?: unknown; description?: unknown; task?: unknown; properties?: unknown }[] };
-		const models = (json.result ?? []).filter((item) => typeof item.name === "string" && item.name.startsWith("@cf/") && (item.task === "Text Generation" || item.task === "text-generation" || !item.task)).map((item) => ({ id: item.name as string, name: item.name as string, rates: cloudflareRates(item.properties) })).slice(0, 200);
+		// The binding needs no account ID or token, so every installation gets the live list.
+		const models = selectCloudflareToolModels(await env.AI.models({ task: "Text Generation", per_page: 100 }));
 		return models.length ? { models, source: "catalog" } : { models: CLOUDFLARE_TOOL_MODELS, source: "suggested" };
-	} catch { return { models: CLOUDFLARE_TOOL_MODELS, source: "suggested" }; }
+	} catch (error) {
+		console.error("Could not read the Workers AI catalog", error);
+		return { models: CLOUDFLARE_TOOL_MODELS, source: "suggested" };
+	}
 }
 
 export async function listCompatibleAgentModels(env: CloudflareEnv, input: { preset: AgentProviderPreset; baseUrl: string; apiKey?: string }) {
