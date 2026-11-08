@@ -19,19 +19,15 @@ export function BrandAuthShell({ title, description, children, footer, steps }: 
 
 			<main className="relative z-10 mx-auto flex min-h-dvh w-full max-w-md flex-col px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-8 sm:pt-12">
 				<header className="flex flex-col items-center text-center">
-					<div className="bf-auth-logo relative h-36 w-36 sm:h-44 sm:w-44">
+					<div className="bf-auth-logo relative h-52 w-52 sm:h-64 sm:w-64">
 						<img
 							src={customBrand.logoUrl}
-							alt={`Logo ${customBrand.name}`}
+							alt={`${customBrand.name} ${customBrand.tagline}`}
 							className="relative h-full w-full select-none object-contain"
 							draggable={false}
 						/>
 					</div>
-					<p className="-mt-3 text-5xl font-extrabold leading-none tracking-tight text-white sm:text-6xl">
-						{customBrand.name}
-					</p>
-					<p className="mt-1 text-2xl font-light text-neutral-300">{customBrand.tagline}</p>
-					<h1 className="mt-6 text-base font-medium text-neutral-400">{title}</h1>
+					<h1 className="mt-4 text-base font-medium text-neutral-400">{title}</h1>
 					{description && <p className="mt-2 max-w-sm text-sm leading-6 text-neutral-500">{description}</p>}
 				</header>
 

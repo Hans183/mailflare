@@ -1,5 +1,7 @@
-// Regenerates the app icons (public/icon-*.png, favicon.ico) from the
-// BlackFire logo in public/brand. Run after changing the logo:
+// Regenerates the app icons (public/icon-*.png, favicon.ico) from the vector
+// BlackFire logo, public/brand/blackfire.svg (CorelDRAW export: ring, flame
+// with the skull cut out, then the "BlackFire Systems" lettering).
+// Run after changing the logo:
 //   node scripts/custom-brand-icons.mjs
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -7,14 +9,29 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const source = join(root, "public/brand/blackfire-logo.png");
+const svg = readFileSync(join(root, "public/brand/blackfire.svg"), "utf8");
 
-// The logo sits in a lot of transparent padding; trim it so the mark fills the icon.
-const trimmed = await sharp(readFileSync(source)).trim({ threshold: 1 }).png().toBuffer();
+// Keep only the mark: drop the lettering (white and #CCCCCC shapes), and
+// either drop the hairline ring or thicken it so it survives at icon sizes.
+function markSvg({ ring }) {
+	let out = svg.replace(/<(path|polygon)\b[^>]*fill="(white|#CCCCCC)"[^>]*\/>/g, "");
+	out = ring
+		? out.replace(/stroke-width="[^"]+"/, `stroke-width="${ring}"`)
+		: out.replace(/<path\b[^>]*fill="none"[^>]*\/>/, "");
+	return Buffer.from(out);
+}
+
+// Render well above the largest icon (1024 viewBox × 3), then trim the empty
+// canvas so the mark fills each icon; every size is a downscale, never blurry.
+async function renderMark(options) {
+	return sharp(markSvg(options), { density: 216 }).trim({ threshold: 1 }).png().toBuffer();
+}
+const flameOnly = await renderMark({ ring: 0 });
+const withRing = await renderMark({ ring: 16 });
 
 async function square(size, padding = 0.06) {
 	const inner = Math.round(size * (1 - padding * 2));
-	const mark = await sharp(trimmed).resize(inner, inner, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
+	const mark = await sharp(flameOnly).resize(inner, inner, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
 	return sharp({ create: { width: size, height: size, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
 		.composite([{ input: mark, gravity: "center" }])
 		.png()
@@ -44,7 +61,7 @@ async function onBlack(size, scale) {
 		<rect width="100%" height="100%" fill="url(#g)"/>
 	</svg>`);
 	const inner = Math.round(size * scale);
-	const mark = await sharp(trimmed).resize(inner, inner, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
+	const mark = await sharp(withRing).resize(inner, inner, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
 	return sharp(background).composite([{ input: mark, gravity: "center" }]).png().toBuffer();
 }
 

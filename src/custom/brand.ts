@@ -9,8 +9,12 @@ export const customBrand = {
 	enabled: true,
 	name: "BlackFire",
 	tagline: "Systems",
-	/** Transparent PNG in /public (taken from blackfire.cl). */
-	logoUrl: "/brand/blackfire-logo.png",
+	/**
+	 * Full vector logo (mark + "BlackFire Systems" lettering, white text for
+	 * dark backgrounds). App icons are generated from it by
+	 * scripts/custom-brand-icons.mjs.
+	 */
+	logoUrl: "/brand/blackfire.svg",
 	login: {
 		title: "Ingresa tus credenciales para acceder",
 	},
