@@ -1599,7 +1599,7 @@
 	"agentAdmin.loadingModels": "モデルを読み込み中…",
 	"agentAdmin.modelsUnavailable": "モデルを利用できません",
 	"agentAdmin.suggested": "完全なカタログを利用できないため、推奨の Cloudflare モデルを表示しています。",
-	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, cheapest first.",
+	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, ordered by estimated cost for the assistant, where input weighs more than output.",
 	"agentAdmin.notInCatalog": "Not among Cloudflare's current models with tool calling: {models}. It may be retired or retiring soon, so choose one from the list.",
 	"agentAdmin.cloudflarePricing": "See current Cloudflare prices",
 	"agentAdmin.orEnterIds": "またはモデル ID を入力（カンマ区切り）",

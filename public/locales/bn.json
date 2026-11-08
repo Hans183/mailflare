@@ -1606,7 +1606,7 @@
 	"agentAdmin.loadingModels": "মডেল লোড হচ্ছে…",
 	"agentAdmin.modelsUnavailable": "মডেল উপলব্ধ নেই",
 	"agentAdmin.suggested": "সম্পূর্ণ ক্যাটালগ উপলব্ধ না থাকায় প্রস্তাবিত Cloudflare মডেল দেখানো হচ্ছে।",
-	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, cheapest first.",
+	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, ordered by estimated cost for the assistant, where input weighs more than output.",
 	"agentAdmin.notInCatalog": "Not among Cloudflare's current models with tool calling: {models}. It may be retired or retiring soon, so choose one from the list.",
 	"agentAdmin.cloudflarePricing": "See current Cloudflare prices",
 	"agentAdmin.orEnterIds": "অথবা মডেল আইডি লিখুন (কমা দিয়ে আলাদা করা)",

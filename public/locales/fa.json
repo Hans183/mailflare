@@ -1608,7 +1608,7 @@
 	"agentAdmin.loadingModels": "در حال بارگذاری مدل‌ها…",
 	"agentAdmin.modelsUnavailable": "مدل‌ها در دسترس نیستند",
 	"agentAdmin.suggested": "چون فهرست کامل در دسترس نیست، مدل‌های پیشنهادی Cloudflare نمایش داده می‌شوند.",
-	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, cheapest first.",
+	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, ordered by estimated cost for the assistant, where input weighs more than output.",
 	"agentAdmin.notInCatalog": "Not among Cloudflare's current models with tool calling: {models}. It may be retired or retiring soon, so choose one from the list.",
 	"agentAdmin.cloudflarePricing": "See current Cloudflare prices",
 	"agentAdmin.orEnterIds": "یا شناسه مدل‌ها را وارد کنید (با کاما جدا کنید)",

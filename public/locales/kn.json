@@ -1608,7 +1608,7 @@
 	"agentAdmin.loadingModels": "ಮಾದರಿಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ…",
 	"agentAdmin.modelsUnavailable": "ಮಾದರಿಗಳು ಲಭ್ಯವಿಲ್ಲ",
 	"agentAdmin.suggested": "ಪೂರ್ಣ ಕ್ಯಾಟಲಾಗ್ ಲಭ್ಯವಿಲ್ಲದ ಕಾರಣ ಸೂಚಿಸಿದ Cloudflare ಮಾದರಿಗಳನ್ನು ತೋರಿಸಲಾಗುತ್ತಿದೆ.",
-	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, cheapest first.",
+	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, ordered by estimated cost for the assistant, where input weighs more than output.",
 	"agentAdmin.notInCatalog": "Not among Cloudflare's current models with tool calling: {models}. It may be retired or retiring soon, so choose one from the list.",
 	"agentAdmin.cloudflarePricing": "See current Cloudflare prices",
 	"agentAdmin.orEnterIds": "ಅಥವಾ ಮಾದರಿ IDಗಳನ್ನು ನಮೂದಿಸಿ (ಅಲ್ಪವಿರಾಮದಿಂದ ಬೇರ್ಪಡಿಸಿ)",

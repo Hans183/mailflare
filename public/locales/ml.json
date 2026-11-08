@@ -1608,7 +1608,7 @@
 	"agentAdmin.loadingModels": "മോഡലുകൾ ലോഡ് ചെയ്യുന്നു…",
 	"agentAdmin.modelsUnavailable": "മോഡലുകൾ ലഭ്യമല്ല",
 	"agentAdmin.suggested": "പൂർണ്ണ കാറ്റലോഗ് ലഭ്യമല്ലാത്തതിനാൽ നിർദ്ദേശിച്ച Cloudflare മോഡലുകൾ കാണിക്കുന്നു.",
-	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, cheapest first.",
+	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, ordered by estimated cost for the assistant, where input weighs more than output.",
 	"agentAdmin.notInCatalog": "Not among Cloudflare's current models with tool calling: {models}. It may be retired or retiring soon, so choose one from the list.",
 	"agentAdmin.cloudflarePricing": "See current Cloudflare prices",
 	"agentAdmin.orEnterIds": "അല്ലെങ്കിൽ മോഡൽ ID-കൾ നൽകുക (കോമ കൊണ്ട് വേർതിരിച്ച്)",

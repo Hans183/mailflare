@@ -1606,7 +1606,7 @@
 	"agentAdmin.loadingModels": "मॉडेल लोड होत आहेत…",
 	"agentAdmin.modelsUnavailable": "मॉडेल उपलब्ध नाहीत",
 	"agentAdmin.suggested": "संपूर्ण कॅटलॉग उपलब्ध नसल्याने सुचवलेले Cloudflare मॉडेल दाखवले जात आहेत.",
-	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, cheapest first.",
+	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, ordered by estimated cost for the assistant, where input weighs more than output.",
 	"agentAdmin.notInCatalog": "Not among Cloudflare's current models with tool calling: {models}. It may be retired or retiring soon, so choose one from the list.",
 	"agentAdmin.cloudflarePricing": "See current Cloudflare prices",
 	"agentAdmin.orEnterIds": "किंवा मॉडेल आयडी टाका (स्वल्पविरामाने वेगळे)",

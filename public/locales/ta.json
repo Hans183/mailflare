@@ -1608,7 +1608,7 @@
 	"agentAdmin.loadingModels": "மாடல்கள் ஏற்றப்படுகின்றன…",
 	"agentAdmin.modelsUnavailable": "மாடல்கள் கிடைக்கவில்லை",
 	"agentAdmin.suggested": "முழுப் பட்டியல் கிடைக்காததால், பரிந்துரைக்கப்பட்ட Cloudflare மாடல்கள் காட்டப்படுகின்றன.",
-	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, cheapest first.",
+	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, ordered by estimated cost for the assistant, where input weighs more than output.",
 	"agentAdmin.notInCatalog": "Not among Cloudflare's current models with tool calling: {models}. It may be retired or retiring soon, so choose one from the list.",
 	"agentAdmin.cloudflarePricing": "See current Cloudflare prices",
 	"agentAdmin.orEnterIds": "அல்லது மாடல் ஐடிகளை உள்ளிடவும் (காற்புள்ளியால் பிரிக்கவும்)",

@@ -24,6 +24,14 @@ test("keeps current tool-calling models, cheapest first with unpriced ones last"
 	assert.equal(models[2].rates, undefined);
 });
 
+test("ranks by what the assistant spends, where input outweighs output", () => {
+	const models = selectCloudflareToolModels([
+		{ name: "@cf/a/low-sum-pricier-input", properties: [tools, price(0.1, 0.3)] },
+		{ name: "@cf/a/high-sum-cheaper-input", properties: [tools, price(0.0605, 0.4)] },
+	]);
+	assert.deepEqual(models.map((model) => model.id), ["@cf/a/high-sum-cheaper-input", "@cf/a/low-sum-pricier-input"]);
+});
+
 test("drops models without tool calling, retiring models and known unreliable ones", () => {
 	const models = selectCloudflareToolModels([
 		{ name: "@cf/a/no-tools", properties: [price(1, 1)] },

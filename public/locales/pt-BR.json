@@ -1617,7 +1617,7 @@
 	"agentAdmin.loadingModels": "Carregando modelos…",
 	"agentAdmin.modelsUnavailable": "Modelos indisponíveis",
 	"agentAdmin.suggested": "Mostrando modelos sugeridos da Cloudflare porque um catálogo completo não está disponível.",
-	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, cheapest first.",
+	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, ordered by estimated cost for the assistant, where input weighs more than output.",
 	"agentAdmin.notInCatalog": "Not among Cloudflare's current models with tool calling: {models}. It may be retired or retiring soon, so choose one from the list.",
 	"agentAdmin.cloudflarePricing": "See current Cloudflare prices",
 	"agentAdmin.orEnterIds": "Ou digite IDs de modelos (separados por vírgula)",

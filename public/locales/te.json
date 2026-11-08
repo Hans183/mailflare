@@ -1606,7 +1606,7 @@
 	"agentAdmin.loadingModels": "మోడల్‌లు లోడ్ అవుతున్నాయి…",
 	"agentAdmin.modelsUnavailable": "మోడల్‌లు అందుబాటులో లేవు",
 	"agentAdmin.suggested": "పూర్తి కేటలాగ్ అందుబాటులో లేనందున సూచించిన Cloudflare మోడల్‌లు చూపబడుతున్నాయి.",
-	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, cheapest first.",
+	"agentAdmin.liveCatalog": "Live list from Cloudflare: models with tool calling and no planned retirement, ordered by estimated cost for the assistant, where input weighs more than output.",
 	"agentAdmin.notInCatalog": "Not among Cloudflare's current models with tool calling: {models}. It may be retired or retiring soon, so choose one from the list.",
 	"agentAdmin.cloudflarePricing": "See current Cloudflare prices",
 	"agentAdmin.orEnterIds": "లేదా మోడల్ IDలను నమోదు చేయండి (కామాలతో వేరు చేసి)",

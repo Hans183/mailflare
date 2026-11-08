@@ -38,11 +38,14 @@ export function cloudflareRates(properties: unknown): AgentModelRates | undefine
 	return input === null || output === null ? undefined : { input, output };
 }
 
-function totalRate(model: AgentModelOption) {
-	return model.rates ? (model.rates.input ?? 0) + (model.rates.output ?? 0) : Number.POSITIVE_INFINITY;
+// The assistant resends its context on every step, so it reads far more tokens than it writes.
+const INPUT_TOKENS_PER_OUTPUT_TOKEN = 20;
+
+function estimatedCost(model: AgentModelOption) {
+	return model.rates ? (model.rates.input ?? 0) * INPUT_TOKENS_PER_OUTPUT_TOKEN + (model.rates.output ?? 0) : Number.POSITIVE_INFINITY;
 }
 
-/** Current Cloudflare models the assistant can use: tool calling, no planned retirement, cheapest first. */
+/** Current Cloudflare models the assistant can use: tool calling, no planned retirement, cheapest to run first. */
 export function selectCloudflareToolModels(catalog: readonly CloudflareCatalogModel[]): AgentModelOption[] {
 	return catalog
 		.flatMap((item) => {
@@ -51,5 +54,5 @@ export function selectCloudflareToolModels(catalog: readonly CloudflareCatalogMo
 			if (catalogProperty(item.properties, "planned_deprecation_date")) return [];
 			return [{ id: item.name, name: item.name, rates: cloudflareRates(item.properties) }];
 		})
-		.sort((a, b) => totalRate(a) - totalRate(b) || a.id.localeCompare(b.id));
+		.sort((a, b) => estimatedCost(a) - estimatedCost(b) || a.id.localeCompare(b.id));
 }
