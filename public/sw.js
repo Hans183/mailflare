@@ -1,11 +1,38 @@
-self.addEventListener("install", () => {
+// Custom (BlackFire): an offline page for navigations. Chrome on Android needs
+// a real fetch handler to install the site as an app (WebAPK) instead of a
+// shortcut that opens with a title/URL bar.
+const OFFLINE_CACHE = "blackfire-offline-v1";
+const OFFLINE_ASSETS = ["/offline.html", "/brand/blackfire.svg"];
+
+self.addEventListener("install", (event) => {
 	console.log("[sw] installed, activating immediately");
-	self.skipWaiting();
+	event.waitUntil(
+		caches
+			.open(OFFLINE_CACHE)
+			.then((cache) => cache.addAll(OFFLINE_ASSETS))
+			.catch(() => undefined)
+			.then(() => self.skipWaiting()),
+	);
 });
 
 self.addEventListener("activate", (event) => {
 	console.log("[sw] activated, claiming clients");
-	event.waitUntil(self.clients.claim());
+	event.waitUntil(
+		(async () => {
+			const names = await caches.keys();
+			await Promise.all(names.filter((name) => name.startsWith("blackfire-offline-") && name !== OFFLINE_CACHE).map((name) => caches.delete(name)));
+			await self.clients.claim();
+		})(),
+	);
+});
+
+// Only page navigations are intercepted: everything else (API, assets,
+// realtime) goes straight to the network as before.
+self.addEventListener("fetch", (event) => {
+	if (event.request.mode !== "navigate") return;
+	event.respondWith(
+		fetch(event.request).catch(async () => (await caches.match("/offline.html")) || Response.error()),
+	);
 });
 
 self.addEventListener("message", (event) => {

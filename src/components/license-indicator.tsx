@@ -8,7 +8,7 @@ import type { LicenseStatus } from "@/lib/licenses/types";
 import { loadLicenseIndicatorStatus } from "./license-indicator-utils";
 import { LICENSE_STATUS_CHANGED_EVENT } from "@/lib/licenses/constants";
 import { customBrand } from "@/custom/brand";
-import { ThemeToggle } from "@/custom/theme-toggle";
+import { HeaderActions } from "@/custom/header-actions";
 
 function StockLicenseIndicator() {
 	const { t } = useLanguage();
@@ -43,5 +43,5 @@ function StockLicenseIndicator() {
 	);
 }
 
-// Custom: a light/dark toggle replaces the "Upgrade" chip in every header.
-export const LicenseIndicator = customBrand.enabled ? ThemeToggle : StockLicenseIndicator;
+// Custom: notification bell + light/dark toggle replace the "Upgrade" chip in every header.
+export const LicenseIndicator = customBrand.enabled ? HeaderActions : StockLicenseIndicator;
