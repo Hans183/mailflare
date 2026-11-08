@@ -10,6 +10,8 @@ import { getHomeBranding } from "./home-server-utils";
 import { HomeAuthProvider } from "./home-auth";
 import { HomeHeaderActions } from "./home-header-actions";
 import { HomeHeroActions } from "./home-hero-actions";
+import { redirect } from "next/navigation";
+import { customBrand } from "@/custom/brand";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +24,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
+  // Custom: no public landing page. /login sends signed-in users on to /inbox.
+  if (customBrand.enabled) redirect("/login");
   const [branding, t, sessionUser] = await Promise.all([
     getHomeBranding(),
     getServerTranslator(),
