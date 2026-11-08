@@ -6,6 +6,7 @@ import { HelpCircle, Search } from "@/components/icons";
 import { useLanguage } from "@/components/language-provider";
 import { AuthGuard } from "@/components/auth/auth-guard";
 import { ComposeProvider } from "@/components/compose/compose-context";
+import { MailSearchProvider } from "@/components/mail-search/mail-search-context";
 import { FloatingComposer } from "@/components/compose/floating-composer";
 import { MailboxProvider } from "@/components/mailbox-provider";
 import { MailboxSelector } from "@/components/mailbox-selector";
@@ -53,6 +54,7 @@ export default function DashboardLayout({
       <SidebarProvider expandedWidth={256} mobileOverlay>
       <MailboxProvider>
         <ComposeProvider>
+          <MailSearchProvider>
           <ShortcutsProvider>
             <RouteTitle />
           <div className="grid h-dvh grid-cols-[minmax(0,1fr)] md:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] overflow-hidden bg-[#f6f8fc] transition-[grid-template-columns]" style={{ transitionDuration: "var(--sidebar-transition-duration)" }}>
@@ -76,6 +78,7 @@ export default function DashboardLayout({
             <FloatingComposer />
           </div>
           </ShortcutsProvider>
+          </MailSearchProvider>
         </ComposeProvider>
       </MailboxProvider>
       </SidebarProvider>
