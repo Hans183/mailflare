@@ -8,6 +8,7 @@ import { sidebarBootstrapScript } from "@/components/sidebar-state-utils";
 import { themeBootstrapScript } from "@/components/theme-utils";
 import { getHomeBranding } from "./home-server-utils";
 import "./globals.css";
+import "@/custom/app-theme.css";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",

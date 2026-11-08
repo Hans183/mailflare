@@ -1,0 +1,131 @@
+/* BlackFire colors for the signed-in app.
+
+   Screens use the Tailwind palette directly (bg-blue-600, text-blue-700,
+   bg-[#f6f8fc]…), and globals.css already themes them through the
+   --color-* variables, so remapping those variables re-colors every screen
+   without touching components:
+   - the blue accent becomes the fire scale (orange, with the website's
+     yellow→orange gradient on primary buttons);
+   - light mode swaps the bluish greys for warm ones;
+   - dark mode goes from Gmail grey to the near-black of blackfire.cl.
+
+   Imported from src/app/layout.tsx after globals.css. The auth screens keep
+   their own `.dark.bf-auth` theme (auth-theme.css), whose selectors are more
+   specific than the ones here. */
+
+/* ── Light ─────────────────────────────────────────────────────────────── */
+:root {
+	--background: #f7f5f3;
+	--muted: #f6ece4;
+	--primary: #ea580c;
+	--primary-foreground: #ffffff;
+	--color-blue-50: #fff7ed;
+	--color-blue-100: #ffedd5;
+	--color-blue-200: #fed7aa;
+	--color-blue-300: #fdba74;
+	--color-blue-400: #fb923c;
+	--color-blue-500: #f97316;
+	--color-blue-600: #ea580c;
+	--color-blue-700: #c2410c;
+	--color-blue-800: #9a3412;
+	--color-blue-900: #7c2d12;
+	--color-blue-950: #431407;
+	--bf-gradient: linear-gradient(90deg, #fbbf24, #f97316);
+	--bf-gradient-hover: linear-gradient(90deg, #f59e0b, #ea580c);
+	--bf-on-gradient: #1c0a02;
+}
+
+/* Bluish page and hover greys → warm greys. */
+html:not(.dark) .bg-\[\#f6f8fc\],
+html:not(.dark) .bg-\[\#f7f9fc\] { background-color: #f7f5f3; }
+html:not(.dark) .bg-\[\#f2f6fc\],
+html:not(.dark) .bg-\[\#f1f4fa\],
+html:not(.dark) .bg-\[\#f0f3f9\],
+html:not(.dark) .hover\:bg-\[\#f2f6fc\]:hover { background-color: #f3eee9; }
+html:not(.dark) .bg-\[\#eef3fb\],
+html:not(.dark) .bg-\[\#eaf1fb\],
+html:not(.dark) .bg-\[\#e6ecf6\],
+html:not(.dark) .hover\:bg-\[\#e6ecf6\]:hover { background-color: #f6ece4; }
+
+/* ── Dark ──────────────────────────────────────────────────────────────── */
+html.dark {
+	--background: #0b0b0d;
+	--foreground: #ececee;
+	--card: #141417;
+	--muted: #1c1c20;
+	--border: #2a2a30;
+	--primary: #fb923c;
+	--primary-foreground: #0b0b0d;
+	--color-white: #141417;
+	--color-neutral-50: #1a1a1e;
+	--color-neutral-100: #202025;
+	--color-neutral-200: #2a2a30;
+	--color-neutral-300: #4a4a52;
+	--color-gray-50: #1a1a1e;
+	--color-gray-100: #202025;
+	--color-gray-200: #2a2a30;
+	--color-gray-300: #4a4a52;
+	/* Accents stay inverted like the rest of the dark palette (50 is the darkest tint). */
+	--color-blue-50: #2a1206;
+	--color-blue-100: #3b1a08;
+	--color-blue-200: #6b2a0e;
+	--color-blue-300: #9a3412;
+	--color-blue-400: #c2410c;
+	--color-blue-500: #ea580c;
+	--color-blue-600: #fb923c;
+	--color-blue-700: #fdba74;
+	--color-blue-800: #fed7aa;
+	--color-blue-900: #ffedd5;
+	--color-blue-950: #fff7ed;
+}
+
+html.dark .bg-\[\#f6f8fc\],
+html.dark .bg-\[\#f7f9fc\] { background-color: #0b0b0d; }
+html.dark .bg-\[\#f2f6fc\],
+html.dark .bg-\[\#f1f4fa\],
+html.dark .bg-\[\#f0f3f9\] { background-color: #141417; }
+html.dark .bg-\[\#eef3fb\],
+html.dark .bg-\[\#eaf1fb\],
+html.dark .bg-\[\#e6ecf6\] { background-color: #1f1a18; }
+html.dark .hover\:bg-\[\#f2f6fc\]:hover,
+html.dark .hover\:bg-\[\#e6ecf6\]:hover { background-color: #221c19; }
+
+/* A faint ember glow at the bottom of the dark app, like the website. */
+html.dark body {
+	background:
+		radial-gradient(80rem 30rem at 50% 120%, rgb(234 88 12 / 0.12), transparent 70%),
+		#0b0b0d;
+	background-attachment: fixed;
+}
+
+/* ── Primary actions: the website's yellow→orange CTA ─────────────────── */
+html .bg-blue-600 {
+	background-color: #f97316;
+	background-image: var(--bf-gradient);
+}
+html .bg-blue-600:hover,
+html .hover\:bg-blue-700:hover {
+	background-color: #ea580c;
+	background-image: var(--bf-gradient-hover);
+}
+/* Dark text reads better than white on the yellow end of the gradient. */
+html .bg-blue-600.text-white,
+html .bg-blue-600 .text-white,
+html .bg-blue-600 > svg {
+	color: var(--bf-on-gradient);
+}
+
+/* The Compose button (sidebar and mobile FAB) is the app's main CTA. */
+html .bg-blue-100.text-blue-950 {
+	background-color: #f97316;
+	background-image: var(--bf-gradient);
+	color: var(--bf-on-gradient);
+	font-weight: 600;
+	box-shadow: 0 10px 28px -12px rgb(249 115 22 / 0.7);
+}
+html .bg-blue-100.text-blue-950:hover {
+	background-image: var(--bf-gradient-hover);
+}
+
+/* Selection in brand orange. */
+html ::selection { background-color: rgb(249 115 22 / 0.3); }

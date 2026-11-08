@@ -18,14 +18,14 @@ type Ember = {
 const EMBERS_PER_MEGAPIXEL = 110;
 
 function spawn(width: number, height: number, anywhere: boolean): Ember {
-	const maxLife = 6 + Math.random() * 10;
+	const maxLife = 3 + Math.random() * 5;
 	return {
 		x: Math.random() * width,
 		y: anywhere ? Math.random() * height : height + Math.random() * 40,
 		r: 0.8 + Math.random() * Math.random() * 3.6,
-		vy: 14 + Math.random() * 38,
-		vx: (Math.random() - 0.5) * 8,
-		sway: 6 + Math.random() * 22,
+		vy: 60 + Math.random() * 120,
+		vx: (Math.random() - 0.5) * 30,
+		sway: 10 + Math.random() * 40,
 		phase: Math.random() * Math.PI * 2,
 		life: anywhere ? Math.random() * maxLife : 0,
 		maxLife,
@@ -74,7 +74,7 @@ export function EmberBackground() {
 			for (let i = 0; i < embers.length; i++) {
 				const e = embers[i];
 				e.life += dt;
-				e.phase += dt * 1.6;
+				e.phase += dt * 3.2;
 				e.y -= e.vy * dt;
 				e.x += (e.vx + Math.sin(e.phase) * e.sway * 0.35) * dt;
 				if (e.life > e.maxLife || e.y < -20 || e.x < -20 || e.x > width + 20) {
