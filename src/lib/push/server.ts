@@ -2,6 +2,7 @@ import { and, eq, gt, inArray } from "drizzle-orm";
 import { getDb } from "@/db";
 import { pushSubscriptions, sessions } from "@/db/schema";
 import type { NewMessageNotification } from "@/lib/realtime/types";
+import { customBrand } from "@/custom/brand";
 
 type VapidConfig = {
 	publicKey: string;
@@ -259,8 +260,8 @@ export async function sendPushNotifications(
 	const name = (payload.fromName ?? "").replace(/[\u0000-\u001f\u202a-\u202e\u2066-\u2069]/g, "").trim();
 	const sender = (name && name.toLowerCase() !== payload.from.toLowerCase() ? `${name.slice(0, 120)} <${payload.from}>` : payload.from).slice(0, 240);
 	await sendPushContent(env, userIds, {
-		title: (payload.subject || "New email").slice(0, 180),
-		body: `From ${sender}`,
+		title: (payload.subject || (customBrand.enabled ? customBrand.push.untitled : "New email")).slice(0, 180),
+		body: `${customBrand.enabled ? customBrand.push.fromPrefix : "From"} ${sender}`,
 		tag: payload.messageId,
 		url: `/inbox/${payload.messageId}`,
 	});
@@ -296,7 +297,7 @@ export async function sendPushContent(
 	const notificationPayload = JSON.stringify({
 		...content,
 		icon: "/icon-192.png",
-		badge: "/icon-96.png",
+		badge: customBrand.enabled ? customBrand.push.badgeUrl : "/icon-96.png",
 	});
 
 	await Promise.allSettled(

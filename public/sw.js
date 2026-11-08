@@ -12,11 +12,12 @@ self.addEventListener("message", (event) => {
 	if (event.data?.type === "SKIP_WAITING") self.skipWaiting();
 });
 
+// Custom (BlackFire): Spanish defaults and the white status-bar silhouette.
 const DEFAULT_NOTIFICATION = {
-	title: "New email",
-	body: "You have a new message",
+	title: "Nuevo correo",
+	body: "Tienes un mensaje nuevo",
 	icon: "/icon-192.png",
-	badge: "/icon-96.png",
+	badge: "/badge-96.png",
 	url: "/inbox",
 };
 

@@ -71,6 +71,27 @@ for (const size of [192, 512]) {
 	console.log(`public/icon-${size}.png, public/icon-maskable-${size}.png`);
 }
 
+// Notification badge: Android draws only the alpha channel in the status bar,
+// so ship a white silhouette of the flame (the skull stays cut out).
+{
+	const size = 96;
+	const inner = Math.round(size * 0.84);
+	const alpha = await sharp(flameOnly)
+		.resize(inner, inner, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+		.extractChannel("alpha")
+		.toBuffer();
+	const white = await sharp({ create: { width: inner, height: inner, channels: 3, background: "#ffffff" } })
+		.joinChannel(alpha)
+		.png()
+		.toBuffer();
+	const badge = await sharp({ create: { width: size, height: size, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
+		.composite([{ input: white, gravity: "center" }])
+		.png()
+		.toBuffer();
+	writeFileSync(join(root, "public/badge-96.png"), badge);
+	console.log("public/badge-96.png");
+}
+
 // favicon.ico with PNG-encoded 16, 32 and 48 px images.
 const sizes = [16, 32, 48];
 const images = await Promise.all(sizes.map((size) => square(size, 0.02)));

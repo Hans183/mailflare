@@ -18,4 +18,12 @@ export const customBrand = {
 	login: {
 		title: "Ingresa tus credenciales para acceder",
 	},
+	push: {
+		/** Title when a message has no subject. */
+		untitled: "Nuevo correo",
+		/** Body line before the sender. */
+		fromPrefix: "De",
+		/** White silhouette Android shows in the status bar (scripts/custom-brand-icons.mjs). */
+		badgeUrl: "/badge-96.png",
+	},
 };
