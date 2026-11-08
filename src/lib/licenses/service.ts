@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import packageJson from "../../../package.json";
 import { getDb } from "@/db";
 import { licenseSettings } from "@/db/schema";
+import { customLicense } from "@/custom/license";
 import { LICENSE_PRODUCT_IDS } from "./constants";
 import { callPaymugLicenseApi } from "./paymug";
 import type { LicenseEntitlements, LicensePlan, LicenseStatus, PaymugLicenseAction } from "./types";
@@ -34,6 +35,9 @@ async function getOrCreateLicenseSettings(env: CloudflareEnv) {
 }
 
 function toLicenseStatus(settings: typeof licenseSettings.$inferSelect): LicenseStatus {
+	if (customLicense.enabled) {
+		return { plan: "team", state: "active", features: [], seatLimit: null, instanceId: settings.instanceId, instanceUrl: settings.instanceUrl, active: true, activatedAt: settings.activatedAt, validatedAt: settings.validatedAt };
+	}
 	const active = settings.state === "active" && (settings.plan === "pro" || settings.plan === "team");
 	return {
 		plan: active ? settings.plan : "community",

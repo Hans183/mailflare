@@ -20,6 +20,7 @@ import { useLanguage } from "./language-provider";
 import type { TranslationKey } from "@/lib/i18n/types";
 import type { NavLink } from "./components-nav-types";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { customLicense } from "@/custom/license";
 import { NavItem } from "./components-nav";
 import { NavSectionHeader, useSectionOpen } from "./nav-section-header";
 import { SidebarFooter } from "./sidebar-footer";
@@ -70,7 +71,7 @@ const sections: { id?: string; labelKey?: TranslationKey; links: AdminNavLink[] 
     labelKey: "admin.nav.product",
     links: [
       { href: "/branding", labelKey: "admin.nav.branding", icon: Palette, permission: "primary" },
-      { href: "/licenses", labelKey: "admin.nav.licenses", icon: BadgeDollarSign, permission: "primary" },
+      ...(customLicense.enabled ? [] : [{ href: "/licenses", labelKey: "admin.nav.licenses", icon: BadgeDollarSign, permission: "primary" } satisfies AdminNavLink]),
     ],
   },
 ];

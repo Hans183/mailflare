@@ -22,7 +22,8 @@ export async function getBranding(env: CloudflareEnv): Promise<Branding> {
 			.where(eq(appSettings.id, APP_SETTINGS_ID))
 			.limit(1);
 		return {
-			appName: settings?.appName || DEFAULT_APP_NAME,
+			// The seeded row holds the stock name, which must not replace the custom brand.
+			appName: (settings?.appName !== "Mailflare" && settings?.appName) || DEFAULT_APP_NAME,
 			hasCustomIcon: !!settings?.iconKey,
 			canCustomizeBranding: true,
 		};
