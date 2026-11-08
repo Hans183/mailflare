@@ -58,6 +58,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 				<script dangerouslySetInnerHTML={{ __html: sidebarBootstrapScript }} />
 				<script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
 				<link rel="icon" href="/api/branding/icon"></link>
+				{/* Custom: vinext streams metadata links after </head>, where Chrome ignores
+				    rel=manifest, so the PWA was never installable. Declare them in <head>. */}
+				<link rel="manifest" href="/manifest.webmanifest" />
+				<link rel="apple-touch-icon" href="/icon-192.png" />
+				<meta name="theme-color" content="#050505" />
 			</head>
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 				<LanguageProvider initialLocale={locale} initialMessages={messages}><Providers initialBranding={branding}>{children}</Providers></LanguageProvider>
