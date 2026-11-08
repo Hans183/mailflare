@@ -9,6 +9,8 @@ export const customBrand = {
 	enabled: true,
 	name: "BlackFire",
 	tagline: "Systems",
+	/** Name of the installed app (home screen, app list, iOS label). */
+	installName: "Mail - BlackFire",
 	/**
 	 * Full vector logo (mark + "BlackFire Systems" lettering, white text for
 	 * dark backgrounds). App icons are generated from it by

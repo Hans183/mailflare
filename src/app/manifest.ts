@@ -3,8 +3,8 @@ import { customBrand } from "@/custom/brand";
 
 export default function manifest(): MetadataRoute.Manifest {
 	return {
-		name: customBrand.enabled ? `${customBrand.name} Mail` : "Mailflare",
-		short_name: customBrand.enabled ? customBrand.name : "Mailflare",
+		name: customBrand.enabled ? customBrand.installName : "Mailflare",
+		short_name: customBrand.enabled ? customBrand.installName : "Mailflare",
 		description: "Email, anywhere.",
 		id: "/",
 		scope: "/",

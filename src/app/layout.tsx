@@ -9,6 +9,7 @@ import { themeBootstrapScript } from "@/components/theme-utils";
 import { getHomeBranding } from "./home-server-utils";
 import "./globals.css";
 import "@/custom/app-theme.css";
+import { customBrand } from "@/custom/brand";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -28,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		icons: { icon: "/api/branding/icon", apple: "/icon-192.png" },
 		appleWebApp: {
 			capable: true,
-			title: appName,
+			title: customBrand.enabled ? customBrand.installName : appName,
 			statusBarStyle: "default",
 		},
 		robots: {
