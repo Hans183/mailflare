@@ -1,7 +1,8 @@
 import type { Branding } from "@/lib/branding/types";
+import { customBrand } from "@/custom/brand";
 
 export const DEFAULT_BRANDING: Branding = {
-	appName: "Mailflare",
+	appName: customBrand.enabled ? customBrand.name : "Mailflare",
 	hasCustomIcon: false,
 	canCustomizeBranding: false,
 };

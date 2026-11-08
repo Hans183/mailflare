@@ -7,8 +7,10 @@ import { Button } from "@/components/ui/button";
 import type { LicenseStatus } from "@/lib/licenses/types";
 import { loadLicenseIndicatorStatus } from "./license-indicator-utils";
 import { LICENSE_STATUS_CHANGED_EVENT } from "@/lib/licenses/constants";
+import { customBrand } from "@/custom/brand";
+import { ThemeToggle } from "@/custom/theme-toggle";
 
-export function LicenseIndicator() {
+function StockLicenseIndicator() {
 	const { t } = useLanguage();
 	const [license, setLicense] = useState<LicenseStatus | null>(null);
 
@@ -40,3 +42,6 @@ export function LicenseIndicator() {
 			</Link>
 	);
 }
+
+// Custom: a light/dark toggle replaces the "Upgrade" chip in every header.
+export const LicenseIndicator = customBrand.enabled ? ThemeToggle : StockLicenseIndicator;
