@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TurnstileField } from "@/components/auth/turnstile";
 import { authErrorText } from "@/lib/auth/error-messages";
+import { customBrand } from "@/custom/brand";
 import { isPasskeyCancellation } from "@/lib/auth/webauthn/browser-errors";
 import {
 	finishPasskeyLogin,
@@ -263,11 +264,11 @@ export function LoginClient({ adding = false }: { adding?: boolean }) {
   return (
     <AuthShell
       icon={Mail}
-      title={adding ? t("auth.addAnother") : t("auth.signIn")}
+      title={adding ? t("auth.addAnother") : customBrand.enabled ? customBrand.login.title : t("auth.signIn")}
       description={
         adding
           ? t("auth.addDescription")
-          : t("auth.signInDescription")
+          : customBrand.enabled ? undefined : t("auth.signInDescription")
       }
     >
       <form method="post" onSubmit={onSubmit} className="space-y-5">

@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { useBranding } from "@/components/branding-provider";
 import { LanguageSelector } from "@/components/language-selector";
 import type { AuthShellProps } from "./types";
+import { customBrand } from "@/custom/brand";
+import { BrandAuthShell } from "@/custom/brand-auth-shell";
 
-export function AuthShell({
+function StockAuthShell({
   icon: Icon,
   title,
   description,
@@ -96,3 +98,6 @@ export function AuthShell({
     </div>
   );
 }
+
+// Custom: BlackFire layout (src/custom). Disable with customBrand.enabled.
+export const AuthShell = customBrand.enabled ? BrandAuthShell : StockAuthShell;

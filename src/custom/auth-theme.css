@@ -1,0 +1,106 @@
+/* BlackFire theme for the auth screens (login, forgot password, setup).
+   BrandAuthShell sets `dark bf-auth` on its root: the app's dark palette
+   (`.dark` in globals.css) handles neutrals, and this file swaps the blue
+   accent for the blackfire.cl fire gradient. Selectors use `.dark.bf-auth`
+   so they outrank the generic `.dark .bg-blue-600` rules. */
+
+.dark.bf-auth {
+	--bf-yellow: #fde047;
+	--bf-orange: #f97316;
+	--bf-red: #ef4444;
+	--color-blue-500: #f97316;
+	--color-blue-600: #f97316;
+	--color-blue-700: #fb923c;
+	--primary: var(--bf-orange);
+	--primary-foreground: #0b0b0d;
+	color-scheme: dark;
+	background: linear-gradient(180deg, #000 0%, #070102 35%, #1c0405 70%, #3d0b0b 100%);
+}
+
+/* Fire glow rising from the bottom edge, gently breathing. */
+.dark.bf-auth .bf-auth-glow {
+	background:
+		radial-gradient(70% 45% at 50% 115%, rgb(234 88 12 / 0.35), transparent 70%),
+		radial-gradient(40% 30% at 20% 105%, rgb(220 38 38 / 0.25), transparent 70%),
+		radial-gradient(40% 30% at 80% 105%, rgb(245 158 11 / 0.18), transparent 70%);
+	animation: bf-breathe 6s ease-in-out infinite;
+}
+
+@keyframes bf-breathe {
+	0%, 100% { opacity: 0.75; }
+	50% { opacity: 1; }
+}
+
+/* The logo PNG already carries its own ring; only add the fire glow. */
+.dark.bf-auth .bf-auth-logo img {
+	filter: drop-shadow(0 0 28px rgb(249 115 22 / 0.35));
+}
+
+/* Labels: white and bold like the reference. */
+.dark.bf-auth label {
+	color: #fff;
+	font-weight: 600;
+}
+
+/* Inputs: dark rounded fields with a fire focus ring. */
+.dark.bf-auth input:not([type="checkbox"]):not([type="radio"]) {
+	height: 3rem;
+	border-radius: 0.75rem;
+	background-color: rgb(39 37 44 / 0.85);
+	border-color: rgb(255 255 255 / 0.08);
+	color: #f4f4f5;
+	box-shadow: none;
+	backdrop-filter: blur(6px);
+}
+.dark.bf-auth input::placeholder {
+	color: #71717a;
+}
+.dark.bf-auth input:focus-visible {
+	border-color: var(--bf-orange);
+	box-shadow: 0 0 0 3px rgb(249 115 22 / 0.25);
+}
+
+/* Primary buttons: the yellow-to-orange CTA from the website. */
+.dark.bf-auth .bg-blue-600 {
+	background-color: var(--bf-orange);
+	background-image: linear-gradient(90deg, var(--bf-yellow), var(--bf-orange));
+	color: #120804;
+	font-weight: 700;
+	border-radius: 0.75rem;
+	box-shadow: 0 10px 30px -10px rgb(249 115 22 / 0.6);
+}
+.dark.bf-auth .bg-blue-600:hover,
+.dark.bf-auth .hover\:bg-blue-700:hover {
+	background-color: var(--bf-orange);
+	background-image: linear-gradient(90deg, #facc15, #ea580c);
+}
+
+/* Outline buttons (passkey): glassy dark with a subtle border. */
+.dark.bf-auth button.border:not(.bg-blue-600) {
+	border-radius: 0.75rem;
+	background-color: rgb(20 18 22 / 0.6);
+	border-color: rgb(255 255 255 / 0.12);
+	color: #f4f4f5;
+	backdrop-filter: blur(6px);
+}
+.dark.bf-auth button.border:not(.bg-blue-600):hover {
+	background-color: rgb(40 32 34 / 0.8);
+	border-color: rgb(249 115 22 / 0.5);
+}
+
+/* Accent text (links, active step). */
+.dark.bf-auth .text-blue-600,
+.dark.bf-auth .text-blue-700 {
+	color: #fb923c;
+}
+
+/* Error banner readable on the dark background. */
+.dark.bf-auth [role="alert"] {
+	background-color: rgb(127 29 29 / 0.35);
+	border-color: rgb(248 113 113 / 0.35);
+	color: #fecaca;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.dark.bf-auth .bf-auth-glow { animation: none; }
+}
